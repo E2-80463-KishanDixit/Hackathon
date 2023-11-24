@@ -19,7 +19,7 @@ void sign_up(void){
 
     fclose(fptr);
     //Assigning unique id 
-    user.userid = u_id; 
+    user.userid = u_id+1; 
 
     printf("Enter your First Name: \n");
     scanf("%*c%[^\n]s",user.fname);
@@ -60,10 +60,26 @@ void sign_up(void){
 
 //validate user email
 int validate_email(char *email){
+
+    FILE * fptr = fopen("user.db","ab+");
+    signup_t temp;
+
+    if(fptr == NULL){
+        printf("Unable to open file\n");
+    }
+        while(fread(&temp,sizeof(signup_t),1,fptr) != 0){
+            if(strcpy(temp.email,email)){
+                printf("User Already Exist\n");
+                return 0;
+            }
+        }
+    fclose(fptr);
+
     if((strstr(email,"@gmail.com")== NULL) && (strstr(email,"@rediffmail.com")== NULL) && (strstr(email,"@yahoo.com")== NULL)){
         printf("Enetr a valid Email\n");
         return 0;
     }
+
     return 1;
 }
 
