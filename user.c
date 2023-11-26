@@ -68,7 +68,7 @@ int validate_email(char *email){
         printf("Unable to open file\n");
     }
         while(fread(&temp,sizeof(signup_t),1,fptr) != 0){
-            if(strcpy(temp.email,email)){
+            if(!strcmp(temp.email,email)){
                 printf("User Already Exist\n");
                 return 0;
             }
@@ -199,7 +199,7 @@ void edit_profile(int signin_id){
 
     printf("Edit your First Name:\n");
     scanf("%*c%[^\n]s",efname);
-    strcpy(user.lname,efname);
+    strcpy(user.fname,efname);
 
     printf("Edit your Last Name\n");
     scanf("%*c%[^\n]s",elname);
@@ -300,7 +300,6 @@ void display_movies(){
 }
 
 void create_review(int signin_id){
-
     char str_review [20];
     reivew_t review;
 
@@ -316,7 +315,7 @@ void create_review(int signin_id){
         }
         fclose(fptr);
     }
-
+    printf("Your review should contain ontly 20 chareacter\n");
     review.review_id = review_id+1;
     
     review.user_id = signin_id;
@@ -324,7 +323,7 @@ void create_review(int signin_id){
     printf("Enter Movie Id: \n");
     scanf("%d",&review.move_id);
 
-    printf("Enter a Riview: \n");
+    printf("Enter a Review: \n");
     scanf("%*c%[^\n]s",str_review);
     strcpy(review.myreview,str_review);
 
